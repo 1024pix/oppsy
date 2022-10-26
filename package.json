@@ -12,22 +12,22 @@
     "ops",
     "plugin"
   ],
-  "eslintConfig": {
-    "extends": [
-      "plugin:@hapi/module"
-    ]
-  },
   "dependencies": {
     "@hapi/hoek": "9.x.x"
   },
   "devDependencies": {
     "@hapi/code": "8.x.x",
-    "@hapi/eslint-plugin": "*",
     "@hapi/hapi": "20.x.x",
-    "@hapi/lab": "24.x.x"
+    "chai": "^4.3.6",
+    "chai-asserttype": "^1.0.5",
+    "eslint": "^8.26.0",
+    "eslint-plugin-mocha": "^10.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "mocha": "^10.1.0"
   },
   "scripts": {
-    "test": "lab -a @hapi/code -t 100 -L -m 5000"
+    "lint": "eslint .",
+    "test": "mocha --timeout=5000 --recursive --reporter=${MOCHA_REPORTER:-dot} --exit ./test/*.js"
   },
   "license": "BSD-3-Clause"
 }
