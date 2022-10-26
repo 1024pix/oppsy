@@ -1,13 +1,9 @@
-'use strict';
-
 const Fs = require('fs');
 const Http = require('http');
 const Https = require('https');
 const Stream = require('stream');
 
-const Code = require('@hapi/code');
 const Hapi = require('@hapi/hapi');
-const Lab = require('@hapi/lab');
 
 const Oppsy = require('../lib');
 const Os = require('../lib/os');
@@ -15,17 +11,12 @@ const Process = require('../lib/process');
 const Network = require('../lib/network');
 const Utils = require('../lib/utils');
 
+const { expect } = require('chai');
+const chai = require('chai');
+chai.use(require('chai-asserttype'));
 
-const internals = {};
-
-
-const { describe, it } = exports.lab = Lab.script();
-const expect = Code.expect;
-
-
-describe('Oppsy', { retry: true }, () => {
-
-    it('handles onRequest errors', async () => {
+describe('index', function () {
+    it('handles onRequest errors', async function () {
 
         const server = new Hapi.Server();
 
@@ -41,10 +32,9 @@ describe('Oppsy', { retry: true }, () => {
             url: '/'
         });
     });
+    describe('network', function () {
 
-    describe('Network', () => {
-
-        it('reports on network activity', async () => {
+        it('reports on network activity', async function () {
 
             const server = new Hapi.Server({
                 host: 'localhost'
@@ -58,8 +48,7 @@ describe('Oppsy', { retry: true }, () => {
                 },
                 method: 'GET',
                 path: '/',
-                handler: (request, h) => {
-
+                handler: () => {
                     return 'ok';
                 }
             });
@@ -77,19 +66,22 @@ describe('Oppsy', { retry: true }, () => {
                     host: server.info.host,
                     port: server.info.port,
                     agent
-                }, () => {});
+                }, () => {
+                });
             }
 
             await Utils.timeout(500);
 
-            expect(network._requests).to.have.length(1);
-            expect(network._requests[server.info.port]).to.exist();
             expect(network._requests[server.info.port].total).to.equal(20);
             expect(network._requests[server.info.port].statusCodes[200]).to.equal(20);
-            expect(network._responseTimes[server.info.port]).to.exist();
+            expect(network._responseTimes[server.info.port]).to.have.all.keys([
+                'count',
+                'max',
+                'total']
+            );
         });
 
-        it('resets stored statistics', async () => {
+        it('resets stored statistics', async function () {
 
             const server = new Hapi.Server({
                 host: 'localhost'
@@ -98,8 +90,7 @@ describe('Oppsy', { retry: true }, () => {
             server.route({
                 method: 'GET',
                 path: '/',
-                handler: (request, h) => {
-
+                handler: () => {
                     return 'ok';
                 }
             });
@@ -117,35 +108,36 @@ describe('Oppsy', { retry: true }, () => {
                     host: server.info.host,
                     port: server.info.port,
                     agent
-                }, () => {});
+                }, () => {
+                });
             }
 
             await Utils.timeout(300);
 
             const port = server.info.port;
 
-            expect(network._requests[port]).to.exist();
+            expect(network._requests[port]).to.have.all.keys(['disconnects', 'statusCodes', 'total']);
             expect(network._requests[port].total).to.equal(10);
             expect(network._requests[port].statusCodes[200]).to.equal(10);
 
-            expect(network._responseTimes[port]).to.exist();
+            expect(network._responseTimes[port]).to.have.all.keys(['count', 'max', 'total']);
 
             network.reset();
 
-            expect(network._requests[port]).to.equal({
+            expect(network._requests[port]).to.deep.equal({
                 total: 0,
                 disconnects: 0,
                 statusCodes: {}
             });
 
-            expect(network._responseTimes[port]).to.equal({
+            expect(network._responseTimes[port]).to.deep.equal({
                 count: 0,
                 total: 0,
                 max: 0
             });
         });
 
-        it('reports on socket information', async () => {
+        it('reports on socket information', async function () {
 
             const server = new Hapi.Server({
                 host: 'localhost'
@@ -170,7 +162,7 @@ describe('Oppsy', { retry: true }, () => {
             const upstreamRoute = {
                 method: 'GET',
                 path: '/',
-                handler: async (request, h) => {
+                handler: async () => {
 
                     await Utils.timeout(500);
 
@@ -196,7 +188,7 @@ describe('Oppsy', { retry: true }, () => {
             server.route({
                 method: 'GET',
                 path: '/',
-                handler: (request, h) => {
+                handler: () => {
 
                     Https.get({
                         hostname: upstreamsecure.info.host,
@@ -221,7 +213,7 @@ describe('Oppsy', { retry: true }, () => {
             server.route({
                 method: 'GET',
                 path: '/foo',
-                handler: async (request, h) => {
+                handler: async () => {
 
                     await Utils.timeout(Math.floor(Math.random() * 10) + 1);
 
@@ -263,13 +255,14 @@ describe('Oppsy', { retry: true }, () => {
             expect(response[port].max).to.be.at.least(1);
         });
 
-        it('tracks server disconnects', async () => {
+        it('tracks server disconnects', async function () {
 
             class TestStream extends Stream.Readable {
                 constructor() {
 
                     super();
                 }
+
                 _read() {
 
                     if (this.isDone) {
@@ -297,7 +290,7 @@ describe('Oppsy', { retry: true }, () => {
             server.route({
                 method: 'POST',
                 path: '/',
-                handler: (request, h) => {
+                handler: () => {
 
                     return new TestStream();
                 }
@@ -314,8 +307,7 @@ describe('Oppsy', { retry: true }, () => {
                 method: 'POST'
             };
 
-            const req = Http.request(options, (res) => {
-
+            const req = Http.request(options, () => {
                 req.destroy();
             });
 
@@ -329,16 +321,15 @@ describe('Oppsy', { retry: true }, () => {
             requests[server.info.port] = {
                 total: 1,
                 disconnects: 1,
-                statusCodes: {
-                }
+                statusCodes: {}
             };
 
-            expect(result).to.equal(requests);
+            expect(result).to.deep.equal(requests);
 
             return server.stop();
         });
 
-        it('does not throw if request.response is null', async () => {
+        it('does not throw if request.response is null', async function () {
 
             const server = new Hapi.Server({
                 host: 'localhost'
@@ -347,8 +338,7 @@ describe('Oppsy', { retry: true }, () => {
             server.route({
                 method: 'GET',
                 path: '/',
-                handler: (request, h) => {
-
+                handler: () => {
                     return 'ok';
                 }
             });
@@ -371,67 +361,68 @@ describe('Oppsy', { retry: true }, () => {
                     port: server.info.port
                 }, () => {
 
-                    expect(network._requests[server.info.port]).to.exist();
+                    expect(network._requests[server.info.port]).to.have.all.keys(['total', 'disconnects', 'statusCodes']);
                     expect(network._requests[server.info.port].total).to.equal(1);
-                    expect(network._requests[server.info.port].statusCodes).to.equal({});
+                    expect(network._requests[server.info.port].statusCodes).to.deep.equal({});
                     resolve();
                 });
             });
         });
     });
+    describe('os information', function () {
 
-    describe('os information', () => {
+        describe('mem()', function () {
 
-        describe('mem()', () => {
-
-            it('returns an object with the current memory usage', async () => {
+            it('returns an object with the current memory usage', async function () {
 
                 const mem = await Os.mem();
 
-                expect(mem).to.exist();
-                expect(mem.total).to.exist();
-                expect(mem.free).to.exist();
+                expect(mem).to.have.all.keys(['total', 'free']);
             });
         });
-        describe('loadavg()', () => {
+        describe('loadavg()', function () {
 
-            it('returns an object with the current load average', async () => {
+            it('returns an object with the current load average', async function () {
 
                 const load = await Os.loadavg();
 
                 expect(load).to.have.length(3);
             });
         });
-        describe('uptime()', () => {
+        describe('uptime()', function () {
 
-            it('returns an object with the current uptime', async () => {
+            it('returns an object with the current uptime', async function () {
 
                 const uptime = await Os.uptime();
 
-                expect(uptime).to.exist();
                 expect(uptime).to.be.a.number();
+                expect(uptime).to.greaterThan(0);
             });
         });
     });
-    describe('process information', () => {
+    describe('process information', function () {
 
-        describe('memory()', () => {
+        describe('memory()', function () {
 
-            it('passes the current memory usage to the callback', async () => {
+            it('passes the current memory usage to the callback', async function () {
 
                 const mem = await Process.memoryUsage();
 
-                expect(mem).to.exist();
+                expect(mem).to.have.all.keys(['arrayBuffers',
+                    'external',
+                    'heapTotal',
+                    'heapUsed',
+                    'rss']);
             });
         });
 
-        describe('delay()', () => {
+        describe('delay()', function () {
 
-            it('passes the current event queue delay to the callback', async () => {
+            it('passes the current event queue delay to the callback', async function () {
 
                 const delay = await Process.delay();
 
-                expect(delay).to.exist();
+                expect(delay).be.greaterThan(0);
             });
         });
     });

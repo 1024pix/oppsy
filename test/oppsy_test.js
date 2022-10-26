@@ -1,48 +1,40 @@
-'use strict';
-
 const Os = require('os');
-
-const Code = require('@hapi/code');
 const Hapi = require('@hapi/hapi');
-const Lab = require('@hapi/lab');
 
 const Network = require('../lib/network');
 const Utils = require('../lib/utils');
-const Oppsy = require('../lib');
+const Oppsy_test = require('../lib');
+
+const { expect } = require('chai');
+const chai = require('chai');
+chai.use(require('chai-asserttype'));
 
 
-const internals = {};
+describe('oppsy', function () {
 
+    describe('constructor()', function () {
 
-const { describe, it } = exports.lab = Lab.script();
-const expect = Code.expect;
+        it('is an event EventEmitter', function () {
 
-
-describe('Oppsy', () => {
-
-    describe('constructor()', () => {
-
-        it('is an event EventEmitter', () => {
-
-            const opps = new Oppsy(new Hapi.Server(), {});
+            const opps = new Oppsy_test(new Hapi.Server(), {});
             expect(opps.emit).to.be.a.function();
             expect(opps.on).to.be.a.function();
         });
-        it('creates a network monitor and a map of tasks', () => {
+        it('creates a network monitor and a map of tasks', function () {
 
-            const opps = new Oppsy(new Hapi.Server());
+            const opps = new Oppsy_test(new Hapi.Server());
             expect(opps._networkMonitor).to.be.an.instanceof(Network);
-            expect(opps._tasks).to.include(['osload', 'osmem', 'osup', 'psup', 'psmem', 'psdelay', 'requests', 'responseTimes', 'sockets']);
+            expect(opps._tasks).to.have.all.keys(['pscpu', 'osload', 'osmem', 'osup', 'psup', 'psmem', 'psdelay', 'requests', 'responseTimes', 'sockets']);
         });
     });
 
-    describe('start()', () => {
+    describe('start()', function () {
 
-        it('emits an "ops" event at the specified interval', () => {
+        it('emits an "ops" event at the specified interval', function () {
 
             let count = 0;
             const host = Os.hostname();
-            const opps = new Oppsy(new Hapi.Server());
+            const opps = new Oppsy_test(new Hapi.Server());
             opps._tasks = {
                 one: () => {
 
@@ -84,11 +76,11 @@ describe('Oppsy', () => {
             });
         });
 
-        it('emits an error if one occurs during processing', () => {
+        it('emits an error if one occurs during processing', function () {
 
             let count = 0;
             const host = Os.hostname();
-            const opps = new Oppsy(new Hapi.Server());
+            const opps = new Oppsy_test(new Hapi.Server());
 
             opps._tasks = {
                 one: () => {
@@ -133,10 +125,10 @@ describe('Oppsy', () => {
             });
         });
 
-        it('does not emit the event after it is stopped', async () => {
+        it('does not emit the event after it is stopped', async function () {
 
             let count = 0;
-            const opps = new Oppsy(new Hapi.Server());
+            const opps = new Oppsy_test(new Hapi.Server());
 
             opps._tasks = {
                 one: () => {
@@ -157,11 +149,11 @@ describe('Oppsy', () => {
         });
     });
 
-    it('emits "ops" events with data', async () => {
+    it('emits "ops" events with data', async function () {
 
         let _data = {};
 
-        const opps = new Oppsy(new Hapi.Server());
+        const opps = new Oppsy_test(new Hapi.Server());
 
         opps.on('ops', (data) => {
 
@@ -171,9 +163,9 @@ describe('Oppsy', () => {
 
         await Utils.timeout(500);
 
-        expect(_data.requests).to.equal({});
-        expect(_data.responseTimes).to.equal({});
-        expect(_data.sockets).to.equal({
+        expect(_data.requests).to.deep.equal({});
+        expect(_data.responseTimes).to.deep.equal({});
+        expect(_data.sockets).to.deep.equal({
             http: {
                 total: 0
             },
@@ -182,9 +174,9 @@ describe('Oppsy', () => {
             }
         });
         expect(_data.osload).to.have.length(3);
-        expect(_data.osmem).to.contain(['total', 'free']);
-        expect(_data).to.contain(['osup', 'psup', 'psdelay', 'host']);
-        expect(_data.psmem).to.contain(['rss', 'heapTotal', 'heapUsed']);
-        expect(_data.pscpu).to.contain(['user', 'system']);
+        expect(_data.osmem).to.have.all.keys(['total', 'free']);
+        expect(_data).to.have.all.keys(['osup', 'psup', 'psdelay', 'host', 'osmem', 'osload', 'pscpu', 'psmem', 'requests', 'responseTimes', 'sockets']);
+        expect(_data.psmem).to.have.all.keys(['rss', 'heapTotal', 'heapUsed', 'arrayBuffers', 'external']);
+        expect(_data.pscpu).to.have.all.keys(['user', 'system']);
     });
 });
