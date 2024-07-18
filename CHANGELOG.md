@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/1024pix/oppsy/compare/v1.0.0...v1.0.1) (2024-07-18)
+
+### :building_construction: Tech
+
+- [#12](https://github.com/1024pix/oppsy/pull/12) Spécifier que notre package npm doit être publié publiquement
+
 # 1.0.0 (2024-07-18)
 
 ### :building_construction: Tech

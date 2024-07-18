@@ -1,11 +1,13 @@
 {
   "name": "@1024pix/oppsy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/1024pix/oppsy.git"
   },
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "An EventEmitter useful for collecting hapi server ops information",
   "main": "lib/index.js",
   "files": [
