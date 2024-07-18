@@ -5,6 +5,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/1024pix/oppsy.git"
   },
+  "publishConfig": { "access": "public" },
   "description": "An EventEmitter useful for collecting hapi server ops information",
   "main": "lib/index.js",
   "files": [
