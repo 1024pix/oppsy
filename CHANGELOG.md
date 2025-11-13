@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/1024pix/oppsy/compare/v1.0.1...v1.0.2) (2025-11-13)
+
+### :building_construction: Tech
+
+- [#13](https://github.com/1024pix/oppsy/pull/13) Ajoute le support nodev24.
+
 ## [1.0.1](https://github.com/1024pix/oppsy/compare/v1.0.0...v1.0.1) (2024-07-18)
 
 ### :building_construction: Tech
