@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/1024pix/oppsy/compare/v1.0.2...v1.0.3) (2026-08-28)
+
+### :building_construction: Tech
+
+- [#15](https://github.com/1024pix/oppsy/pull/15) Utiliser la configuration Renovate js-project
+
 ## [1.0.2](https://github.com/1024pix/oppsy/compare/v1.0.1...v1.0.2) (2025-11-13)
 
 ### :building_construction: Tech
