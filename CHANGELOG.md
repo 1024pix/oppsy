@@ -1,3 +1,9 @@
+## [1.0.6](https://github.com/1024pix/oppsy/compare/v1.0.5...v1.0.6) (2026-10-19)
+
+### :arrow_up: Montée de version
+
+- [#20](https://github.com/1024pix/oppsy/pull/20) Update Node.js to v22.23.3
+
 ## [1.0.5](https://github.com/1024pix/oppsy/compare/v1.0.4...v1.0.5) (2026-10-19)
 
 ### :arrow_up: Montée de version
