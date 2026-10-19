@@ -1,3 +1,9 @@
+## [1.0.5](https://github.com/1024pix/oppsy/compare/v1.0.4...v1.0.5) (2026-10-19)
+
+### :arrow_up: Montée de version
+
+- [#18](https://github.com/1024pix/oppsy/pull/18) Pin dependency @hapi/eslint-plugin to v6.0.0 (dossier racine)
+
 ## [1.0.4](https://github.com/1024pix/oppsy/compare/v1.0.3...v1.0.4) (2026-10-19)
 
 ### :arrow_up: Montée de version
