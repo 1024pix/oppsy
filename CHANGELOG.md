@@ -1,3 +1,9 @@
+## [1.0.7](https://github.com/1024pix/oppsy/compare/v1.0.6...v1.0.7) (2026-10-19)
+
+### :arrow_up: Montée de version
+
+- [#19](https://github.com/1024pix/oppsy/pull/19) Update hapijs monorepo (dossier racine)
+
 ## [1.0.6](https://github.com/1024pix/oppsy/compare/v1.0.5...v1.0.6) (2026-10-19)
 
 ### :arrow_up: Montée de version
