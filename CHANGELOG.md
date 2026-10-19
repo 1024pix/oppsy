@@ -1,3 +1,9 @@
+## [1.0.8](https://github.com/1024pix/oppsy/compare/v1.0.7...v1.0.8) (2026-10-19)
+
+### :arrow_up: Montée de version
+
+- [#23](https://github.com/1024pix/oppsy/pull/23) Update github-actions to v7 (workflows)
+
 ## [1.0.7](https://github.com/1024pix/oppsy/compare/v1.0.6...v1.0.7) (2026-10-19)
 
 ### :arrow_up: Montée de version
