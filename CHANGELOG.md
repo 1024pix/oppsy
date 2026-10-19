@@ -1,3 +1,9 @@
+## [1.0.4](https://github.com/1024pix/oppsy/compare/v1.0.3...v1.0.4) (2026-10-19)
+
+### :arrow_up: Montée de version
+
+- [#17](https://github.com/1024pix/oppsy/pull/17) Pin dependencies (dossier racine)
+
 ## [1.0.3](https://github.com/1024pix/oppsy/compare/v1.0.2...v1.0.3) (2026-08-28)
 
 ### :building_construction: Tech
