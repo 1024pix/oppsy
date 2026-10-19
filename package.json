@@ -33,7 +33,7 @@
     "@hapi/code": "9.0.3",
     "@hapi/eslint-plugin": "7.0.0",
     "@hapi/hapi": "21.4.10",
-    "@hapi/lab": "25.3.2"
+    "@hapi/lab": "26.0.1"
   },
   "scripts": {
     "test": "lab --assert @hapi/code --timeout 5000"
