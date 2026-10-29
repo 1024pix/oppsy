@@ -1,3 +1,9 @@
+## [1.1.4](https://github.com/1024pix/oppsy/compare/v1.1.3...v1.1.4) (2026-10-29)
+
+### :arrow_up: Montée de version
+
+- [#25](https://github.com/1024pix/oppsy/pull/25) Pin dependencies (workflows)
+
 ## [1.1.3](https://github.com/1024pix/oppsy/compare/v1.1.2...v1.1.3) (2026-10-29)
 
 ### :arrow_up: Montée de version
