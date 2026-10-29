@@ -1,3 +1,9 @@
+## [1.1.3](https://github.com/1024pix/oppsy/compare/v1.1.2...v1.1.3) (2026-10-29)
+
+### :arrow_up: Montée de version
+
+- [#28](https://github.com/1024pix/oppsy/pull/28) Update dependency @hapi/hapi to v21.4.11 (dossier racine)
+
 ## [1.1.2](https://github.com/1024pix/oppsy/compare/v1.1.1...v1.1.2) (2026-10-27)
 
 ### :arrow_up: Montée de version
