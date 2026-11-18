@@ -1,3 +1,9 @@
+## [1.1.8](https://github.com/1024pix/oppsy/compare/v1.1.7...v1.1.8) (2026-11-18)
+
+### :arrow_up: Montée de version
+
+- [#34](https://github.com/1024pix/oppsy/pull/34) Update Node.js to v24.22.3
+
 ## [1.1.7](https://github.com/1024pix/oppsy/compare/v1.1.6...v1.1.7) (2026-11-12)
 
 ### :arrow_up: Montée de version
