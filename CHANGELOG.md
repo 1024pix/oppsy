@@ -1,3 +1,10 @@
+## [1.1.9](https://github.com/1024pix/oppsy/compare/v1.1.8...v1.1.9) (2026-11-19)
+
+### :arrow_up: Montée de version
+
+- [#35](https://github.com/1024pix/oppsy/pull/35) Update 1024pix/pix-actions digest to 44ba0bb (.github/workflows)
+- [#36](https://github.com/1024pix/oppsy/pull/36) Update Node.js to v26
+
 ## [1.1.8](https://github.com/1024pix/oppsy/compare/v1.1.7...v1.1.8) (2026-11-18)
 
 ### :arrow_up: Montée de version
