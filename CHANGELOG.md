@@ -1,3 +1,9 @@
+## [1.1.10](https://github.com/1024pix/oppsy/compare/v1.1.9...v1.1.10) (2026-11-27)
+
+### :building_construction: Tech
+
+- [#37](https://github.com/1024pix/oppsy/pull/37) Update CI workflow to limit OS and Node versions
+
 ## [1.1.9](https://github.com/1024pix/oppsy/compare/v1.1.8...v1.1.9) (2026-11-19)
 
 ### :arrow_up: Montée de version
